@@ -3,10 +3,14 @@
 
   <form @submit.prevent="storeComment">
     <div>姓名：<input type="text" v-model="form.name"></div>
-    <div v-if="form.errors.name" class="invalid">{{ form.errors.name }}</div>
+    <div v-if="form.errors.name" class="invalid">
+      {{ form.errors.name }}
+    </div>
 
     <div>留言：<textarea v-model="form.content"></textarea></div>
-    <div v-if="form.errors.content" class="invalid">{{ form.errors.content }}</div>
+    <div v-if="form.errors.content" class="invalid">
+      {{ form.errors.content }}
+    </div>
 
     <button>送出</button>
   </form>
@@ -14,7 +18,7 @@
   <ul>
     <li v-for="comment in comments">
       <h2>姓名：{{ comment.name }}</h2>
-      <div>{{ new Date(comment.created_at).toLocaleString() }}</div>
+      <div>{{ comment.created_at }}</div>
       <div>內容：{{ comment.content }}</div>
     </li>
   </ul>

@@ -29,7 +29,7 @@ nav a:hover {
 
 input, textarea {
   display: block;
-  width: 200px;
+  width: 300px;
   padding: 0.25rem;
   border: 1px solid #D1D5DB;
   border-radius: 0.25rem;
@@ -52,7 +52,7 @@ button {
 }
 
 form button {
-  width: 200px;
+  width: 300px;
   margin-top: 1rem;
 }
 form .invalid {
