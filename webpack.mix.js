@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require('laravel-mix')
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +11,22 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix
+  .js('resources/js/app.js', 'public/js')
+  .vue()
+  .postCss('resources/css/app.css', 'public/css', [
+    //
+  ])
+  .alias({
+    '@': `${__dirname}/resources/js`,
+  })
+  .webpackConfig(({ DefinePlugin }) => ({
+    plugins: [
+      new DefinePlugin({
+        __VUE_OPTIONS_API__: 'true',
+        __VUE_PROD_DEVTOOLS__: 'false',
+      }),
+    ],
+  }))
+  .version()
+  .disableNotifications()

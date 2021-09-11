@@ -9,10 +9,15 @@
         "prod": "npm run production",
         "production": "mix --production"
     },
+    "dependencies": {
+        "@inertiajs/inertia": "^0.10.0",
+        "@inertiajs/inertia-vue3": "^0.5.0",
+        "vue": "^3.0.0"
+    },
     "devDependencies": {
-        "axios": "^0.21",
+        "@vue/compiler-sfc": "^3.0.0",
         "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "vue-loader": "^16.0.0"
     }
 }
