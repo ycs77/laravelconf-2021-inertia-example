@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Comment;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,34 +9,23 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
-Route::get('about', function () {
+Route::get('/about', function () {
     return Inertia::render('About', [
         'name' => 'Lucas',
     ]);
 });
 
-Route::get('comments', function () {
-    return Inertia::render('Comments', [
-        'comments' => Comment::all()
-            ->transform(fn (Comment $comment) => [
-                'id' => $comment->id,
-                'name' => $comment->name,
-                'content' => $comment->content,
-                'created_at' => $comment->created_at->format('Y/m/d H:i'),
-            ]),
-    ]);
-});
+Route::get('/comments', [CommentController::class, 'index']);
+Route::post('/comments', [CommentController::class, 'store']);
 
-Route::post('comments', function (Request $request) {
-    $data = $request->validate([
-        'name' => 'required',
-        'content' => 'required',
-    ], [
-        'name.required' => '請輸入姓名',
-        'content.required' => '請輸入留言',
-    ]);
+Route::get('/login', [LoginController::class, 'loginView'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
-    Comment::create($data);
+Route::inertia('/dashboard', 'Dashboard')
+    ->middleware(['auth'])
+    ->name('dashboard');
 
-    return back();
+Route::get('/fail', function () {
+    echo $fail;
 });

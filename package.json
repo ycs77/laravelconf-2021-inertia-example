@@ -16,8 +16,10 @@
     },
     "devDependencies": {
         "@vue/compiler-sfc": "^3.0.0",
+        "autoprefixer": "^10.0",
         "laravel-mix": "^6.0.6",
-        "postcss": "^8.1.14",
+        "postcss": "^8.3.0",
+        "tailwindcss": "^2.2.0",
         "vue-loader": "^16.0.0"
     }
 }

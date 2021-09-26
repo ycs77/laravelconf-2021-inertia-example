@@ -1,67 +1,58 @@
-*, ::before, ::after {
-  box-sizing: border-box;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply font-light;
+  }
+
+  a {
+    @apply text-primary transition-colors;
+  }
+
+  input[type=text],
+  input[type=password],
+  textarea {
+    @apply block w-[300px] p-2 border border-gray-300 rounded focus:outline-none;
+  }
+  textarea {
+    @apply resize-none;
+  }
+
+  label {
+    @apply inline-block mb-1;
+  }
 }
 
-html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
+@layer components {
+  .brand {
+    @apply text-primary text-2xl font-extrabold;
+  }
 
-a {
-  color: #10B981;
-  text-decoration: unset;
-  transition: color,background-color .2s;
-}
+  .nav a, .nav button {
+    @apply block text-gray-400 hover:text-primary pt-3 pb-2 border-b-4 border-transparent text-lg tracking-wider;
+  }
+  .nav a.active {
+    @apply text-primary border-primary;
+  }
 
-nav {
-  display: flex;
-}
-nav a {
-  display: block;
-  padding: 0.5rem 1.25rem;
-  font-size: 1.125rem;
-  font-weight: medium;
-  letter-spacing: 1px;
-  border-radius: 1.25rem;
-}
-nav a:hover {
-  background-color: #D1FAE5;
-}
+  .title {
+    @apply mb-1 text-2xl font-bold text-gray-700;
+  }
 
-input, textarea {
-  display: block;
-  width: 300px;
-  padding: 0.25rem;
-  border: 1px solid #D1D5DB;
-  border-radius: 0.25rem;
-  font-size: inherit;
-  resize: none;
-}
-input:focus, textarea:focus {
-  outline: none;
-}
+  .btn {
+    @apply inline-block bg-primary text-white px-5 py-1.5 rounded;
+  }
 
-button {
-  display: inline-block;
-  color: #fff;
-  background-color: #34D399;
-  padding: 0.325rem 1.25rem;
-  border: none;
-  border-radius: 0.125rem;
-  font-size: inherit;
-  cursor: pointer;
-}
+  form .btn {
+    @apply w-[300px] mt-4;
+  }
+  form .invalid {
+    @apply text-red-500;
+  }
 
-form button {
-  width: 300px;
-  margin-top: 1rem;
-}
-form .invalid {
-  color: #EF4444;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-}
-.mb-4 {
-  margin-bottom: 1rem;
+  .input-group {
+    @apply mt-4;
+  }
 }

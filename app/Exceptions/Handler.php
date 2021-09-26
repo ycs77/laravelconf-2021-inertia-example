@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Inertia\Inertia;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -34,8 +36,39 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (Throwable $exception) {
             //
         });
+    }
+
+    /**
+     * Render the given HttpException.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpExceptionInterface $e)
+    {
+        $code = $e->getStatusCode();
+        $errors = [
+            401 => 'Unauthorized',
+            403 => $e->getMessage() ?: 'Forbidden',
+            404 => 'Not Found',
+            419 => 'Page Expired',
+            429 => 'Too Many Requests',
+            500 => 'Server Error',
+            503 => $e->getMessage() ?: 'Service Unavailable',
+        ];
+
+        if (! config('app.debug') && in_array($code, array_keys($errors))) {
+            return Inertia::render('Error', [
+                'code' => $code,
+                'message' => __($errors[$code]),
+            ])
+                ->toResponse(request())
+                ->setStatusCode($code);
+        }
+
+        return parent::renderHttpException($e);
     }
 }
