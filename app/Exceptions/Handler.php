@@ -42,33 +42,41 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Render the given HttpException.
+     * Render an exception into an HTTP response.
      *
-     * @param  \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface  $e
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
      */
-    protected function renderHttpException(HttpExceptionInterface $e)
+    public function render($request, Throwable $exception)
     {
-        $code = $e->getStatusCode();
-        $errors = [
+        $response = parent::render($request, $exception);
+        $code = $response->getStatusCode();
+        $errorMessages = [
             401 => 'Unauthorized',
-            403 => $e->getMessage() ?: 'Forbidden',
+            403 => $exception->getMessage() ?: 'Forbidden',
             404 => 'Not Found',
-            419 => 'Page Expired',
-            429 => 'Too Many Requests',
+            419 => 'The page expired, please try again.',
+            429 => $exception->getMessage() ?: 'Too Many Requests',
             500 => 'Server Error',
-            503 => $e->getMessage() ?: 'Service Unavailable',
+            503 => $exception->getMessage() ?: 'Service Unavailable',
         ];
 
-        if (! config('app.debug') && in_array($code, array_keys($errors))) {
-            return Inertia::render('Error', [
-                'code' => $code,
-                'message' => __($errors[$code]),
-            ])
-                ->toResponse(request())
-                ->setStatusCode($code);
+        if (in_array($code, array_keys($errorMessages))) {
+            $message = __($errorMessages[$code]);
+            if (in_array($code, [419, 429])) {
+                return back()->with(['error_message' => $message]);
+            } elseif (! config('app.debug')) {
+                return Inertia::render('Error')
+                    ->with('code', $code)
+                    ->with('message', $message)
+                    ->toResponse($request)
+                    ->setStatusCode($code);
+            }
         }
 
-        return parent::renderHttpException($e);
+        return $response;
     }
 }
