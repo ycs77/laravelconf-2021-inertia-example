@@ -6,6 +6,8 @@ Lucas 在 [{Laravel x Vue}Conf Taiwan 2021](https://laravelconf.tw/)
 
 簡報：[SPA](https://laravelconf-2021-livewire-inertiajs-slide.vercel.app/) | [PDF](https://laravelconf-2021-livewire-inertiajs-slide.vercel.app/pdf)
 
+範例：[Livewire 範例](https://github.com/ycs77/laravelconf-2021-livewire-example) | Inertia 範例
+
 ## 安裝範例
 
 ```bash
