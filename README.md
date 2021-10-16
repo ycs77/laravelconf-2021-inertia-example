@@ -10,6 +10,8 @@ Lucas 在 [{Laravel x Vue}Conf Taiwan 2021](https://laravelconf.tw/)
 
 ```bash
 composer install
+cp .env.example .env
+php artisan key:generate
 php artisan migrate
 ```
 
