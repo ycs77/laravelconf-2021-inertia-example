@@ -19,6 +19,7 @@ Lucas 在 [{Laravel x Vue}Conf Taiwan 2021](https://laravelconf.tw/) 分享議�
 ```bash
 composer install
 cp .env.example .env
+vim .env # 編輯 .env 檔，設定資料庫
 php artisan key:generate
 php artisan migrate
 ```
